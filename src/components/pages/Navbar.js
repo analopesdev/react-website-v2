@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import {MdFingerprint} from 'react-icons/md'
 import {FaBars, FaTimes} from 'react-icons/fa'
 import {Button} from './Button'
 import './Navbar.css'
+import {IconContext} from 'react-icons/lib'
 
 function Navbar() {                //click = false
   const [click, setClick] = useState(false)
@@ -21,13 +22,18 @@ function Navbar() {                //click = false
     }
   }
 
+  useEffect(()=>{
+    showButton()
+  }, [])
+
   window.addEventListener('recize', showButton)
 
   return (
     <>
+    <IconContext.Provider value={{color: '#fff'}}>
       <div className="navbar">
         <div className="navbar-container container">
-          <Link to="/" className="navbar-logo">
+          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             <MdFingerprint className="navbar-icon"/>
             LAVISH
           </Link>
@@ -59,7 +65,7 @@ function Navbar() {                //click = false
                 <Link to="/sign-up" className="btn-link">
                   <Button buttonStyle="btn--outline"
                           buttonSize="btn--mobile">
-                            SIGN UP
+                          SIGN UP
                   </Button>
                 </Link>
               )}
@@ -67,6 +73,7 @@ function Navbar() {                //click = false
           </ul>
         </div>
       </div>
+      </IconContext.Provider>
     </>
   )
 }
